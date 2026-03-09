@@ -59,7 +59,7 @@ src/main/java/org/divini/smartwaste_g3
 ## ▶️ Come eseguire il progetto
 
 1. Clonare il repository:
-   git clone https://github.com/TU-REPO/smartwaste_g3.git (github.com in Bing)
+   git clone https://github.com/TU-REPO/smartwaste_g3.git
 2. Aprire il progetto con IntelliJ IDEA
 3. Assicurarsi che il progetto utilizzi **Java 15 o superiore**
 4. Eseguire:
