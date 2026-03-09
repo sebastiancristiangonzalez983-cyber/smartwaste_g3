@@ -70,7 +70,7 @@ src/main/java/org/divini/smartwaste_g3
 
 ## 👤 Autore
 
-**Sebastián Cristian González**  
+**Sebastián Cristian Gonzales Cule**  
 SmartWaste – Progetto accademico
 
 ---
