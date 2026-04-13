@@ -3,19 +3,15 @@ package org.divini.smartwaste_g3.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Organico extends Cassonetto {
-    private double peso = 0.0;
+public abstract class CassonettoVolume extends Cassonetto {
+    protected double volume = 0.0;
 
-    public Organico(String codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
+    public CassonettoVolume(String codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
         super(codice, latitudine, longitudine, dataInstallazione, oraInstallazione, capacita);
     }
 
     public double getPercentualeRiempimento() {
-        return this.peso / this.capacita * 100.0;
-    }
-
-    public TipologiaRifiuto getTipologia() {
-        return TipologiaRifiuto.Organico;
+        return this.volume / this.capacita * 100.0;
     }
 
     public void aggiorna(double valore) {
@@ -27,6 +23,6 @@ public class Organico extends Cassonetto {
             valore = this.capacita;
         }
 
-        this.peso = valore;
+        this.volume = valore;
     }
 }

@@ -5,5 +5,8 @@ public enum TipologiaRifiuto {
     Vetro,
     Carta,
     Plastica,
-    Indifferenziata
+    Indifferenziata;
+
+    private TipologiaRifiuto() {
+    }
 }

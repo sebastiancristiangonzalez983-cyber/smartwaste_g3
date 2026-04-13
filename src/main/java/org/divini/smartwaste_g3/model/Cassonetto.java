@@ -4,66 +4,64 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public abstract class Cassonetto {
-
-    protected int codice;
+    protected String codice;
     protected double latitudine;
     protected double longitudine;
-
     protected LocalDate dataInstallazione;
     protected LocalTime oraInstallazione;
-
     protected LocalDate dataSvuotamento;
     protected LocalTime oraSvuotamento;
-
     protected double capacita;
 
-    public Cassonetto(int codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, LocalDate dataSvuotamento, LocalTime oraSvuotamento, double capacita) {
-
+    public Cassonetto(String codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
         this.codice = codice;
         this.latitudine = latitudine;
         this.longitudine = longitudine;
-
         this.dataInstallazione = dataInstallazione;
         this.oraInstallazione = oraInstallazione;
-
-        this.dataSvuotamento = dataSvuotamento;
-        this.oraSvuotamento = oraSvuotamento;
-
+        this.dataSvuotamento = null;
+        this.oraSvuotamento = null;
         this.capacita = capacita;
     }
 
-    public int getCodice() { return codice; }
-    public double getLatitudine() { return latitudine; }
-    public double getLongitudine() { return longitudine; }
-    public double getCapacita() { return capacita; }
+    public String getCodice() {
+        return this.codice;
+    }
+
+    public double getLatitudine() {
+        return this.latitudine;
+    }
+
+    public double getLongitudine() {
+        return this.longitudine;
+    }
+
+    public double getCapacita() {
+        return this.capacita;
+    }
 
     public void svuota() {
         this.dataSvuotamento = LocalDate.now();
         this.oraSvuotamento = LocalTime.now();
     }
 
-    public abstract double getPercentuale();
-    public abstract void aggiorna(double valore);
+    public abstract double getPercentualeRiempimento();
+
+    public abstract TipologiaRifiuto getTipologia();
+
+    public abstract void aggiorna(double var1);
 
     /* */@Override
     public String toString() {
         return getClass().getSimpleName() + " [" + codice + "] - Riempimento: "
-                + String.format("%.2f", getPercentuale()) + "%";
+                + String.format("%.2f", getPercentualeRiempimento()) + "%";
     }
 
    /*
     @Override
-    public String toString() {
-        return  getClass().getSimpleName() + "\n" +
-                "Codice: " + codice + "\n" +
-                "Latitudine: " + latitudine + "\n" +
-                "Longitudine: " + longitudine + "\n" +
-                "Data installazione: " + dataInstallazione + "\n" +
-                "Ora installazione: " + oraInstallazione + "\n" +
-                "Data ultimo svuotamento: " + dataSvuotamento + "\n" +
-                "Ora ultimo svuotamento: " + oraSvuotamento + "\n" +
-                "Capacità massima: " + capacita + "\n" +
-                "Percentuale riempimento: " + String.format("%.2f", getPercentuale()) + "%";
+   public String toString() {
+        String var10000 = this.getClass().getSimpleName();
+        return var10000 + "\nCodice: " + this.codice + "\nLatitudine: " + this.latitudine + "\nLongitudine: " + this.longitudine + "\nData installazione: " + this.dataInstallazione + "\nOra installazione: " + this.oraInstallazione + "\nData ultimo svuotamento: " + this.dataSvuotamento + "\nOra ultimo svuotamento: " + this.oraSvuotamento + "\nCapacità massima: " + this.capacita + "\nPercentuale riempimento: " + String.format("%.2f", this.getPercentualeRiempimento()) + "%\n";
     }
     */
 }
