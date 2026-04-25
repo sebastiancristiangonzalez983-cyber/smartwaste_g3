@@ -16,27 +16,18 @@ public class GestoreCassonettiList implements GestoreCassonetti {
         cassonetti.add(cassonetto);
     }
 
-    @Override
-    public boolean elimina(String codice) {
-        return false;
-    }
-
-    @Override
-    public Cassonetto cercaPerCodice(String codice) {
-        return null;
-    }
-
-    @Override
-    public boolean elimina(int codice) {
-        return cassonetti.removeIf(c -> c.getCodice().equals(String.valueOf(codice)));
-    }
 
     @Override
     public Cassonetto cercaPerCodice(int codice) {
         return cassonetti.stream()
-                .filter(c -> c.getCodice().equals(String.valueOf(codice)))
+                .filter(c -> c.getCodice() == codice)
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public boolean elimina(int codice) {
+        return cassonetti.removeIf(c -> c.getCodice() == codice);
     }
 
     @Override
@@ -44,15 +35,11 @@ public class GestoreCassonettiList implements GestoreCassonetti {
         return new ArrayList<>(cassonetti);
     }
 
-    @Override
-    public List<Cassonetto> getPerTipologia(TipologiaRifiuto tipo) {
-        return null;
-    }
 
     @Override
-    public List<Cassonetto> getPerTipologia(String tipo) {
+    public List<Cassonetto> getPerTipologia(TipologiaRifiuto  tipo) {
         return cassonetti.stream()
-                .filter(c -> c.getTipologia().name().equalsIgnoreCase(tipo))
+                .filter(c -> c.getTipologia() == tipo)
                 .collect(Collectors.toList());
     }
 

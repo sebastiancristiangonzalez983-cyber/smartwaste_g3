@@ -21,16 +21,6 @@ public class GestoreCassonettiDB implements GestoreCassonetti {
     }
 
     @Override
-    public boolean elimina(String codice) {
-        return false;
-    }
-
-    @Override
-    public Cassonetto cercaPerCodice(String codice) {
-        return null;
-    }
-
-    @Override
     public boolean elimina(int codice) {
         return dao.elimina(codice);
     }
@@ -47,11 +37,6 @@ public class GestoreCassonettiDB implements GestoreCassonetti {
 
     @Override
     public List<Cassonetto> getPerTipologia(TipologiaRifiuto tipo) {
-        return null;
-    }
-
-    @Override
-    public List<Cassonetto> getPerTipologia(String tipo) {
         return dao.getPerTipologia(tipo);
     }
 

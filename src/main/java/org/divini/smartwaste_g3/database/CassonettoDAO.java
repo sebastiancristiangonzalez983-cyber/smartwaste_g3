@@ -15,13 +15,13 @@ public class CassonettoDAO {
     }
 
     // INSERT
-    public void inserisci(Cassonetto c) {
+    public boolean inserisci(Cassonetto c) {
         String sql = "INSERT INTO cassonetti_SmartWaste_G3 (codice, tipologia, capacita, valore) VALUES (?, ?, ?, ?)";
 
         try (Connection co = conn.getConnection();
              PreparedStatement stmt = co.prepareStatement(sql)) {
 
-            stmt.setString(1, c.getCodice());
+            stmt.setInt(1, c.getCodice());
             stmt.setString(2, c.getTipologia().name());
             stmt.setDouble(3, c.getCapacita());
 
@@ -34,9 +34,10 @@ public class CassonettoDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
 
-    // SELECT
+    // SELECT ALL
     public List<Cassonetto> getTutti() {
         List<Cassonetto> lista = new ArrayList<>();
         String sql = "SELECT * FROM cassonetti_SmartWaste_G3";
@@ -46,31 +47,17 @@ public class CassonettoDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-
-                String codice = rs.getString("codice");
-                String tipo = rs.getString("tipologia");
-                double capacita = rs.getDouble("capacita");
-                double valore = rs.getDouble("valore");
-
-                Cassonetto c = switch (TipologiaRifiuto.valueOf(tipo)) {
-                    case Organico -> new Organico(codice, 0, 0, null, null, capacita);
-                    case Vetro -> new Vetro(codice, 0, 0, null, null, (int) capacita);
-                    case Carta -> new Carta(codice, 0, 0, null, null, capacita);
-                    case Plastica -> new Plastica(codice, 0, 0, null, null, capacita);
-                    case Indifferenziata -> new Indifferenziata(codice, 0, 0, null, null, capacita);
-                };
-
-                c.aggiorna(valore);
-                lista.add(c);
+                lista.add(creaCassonettoDaResultSet(rs));
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return lista;
     }
 
+    //DELETE
     public boolean elimina(int codice) {
         String sql = "DELETE FROM cassonetti_SmartWaste_G3 WHERE codice = ?";
 
@@ -85,6 +72,7 @@ public class CassonettoDAO {
         }
     }
 
+    // SELECT BY CODICE
     public Cassonetto cerca(int codice) {
         String sql = "SELECT * FROM cassonetti_SmartWaste_G3 WHERE codice = ?";
 
@@ -105,14 +93,15 @@ public class CassonettoDAO {
         return null;
     }
 
-    public List<Cassonetto> getPerTipologia(String tipo) {
+    // SELECT BY TIPOLOGIA
+    public List<Cassonetto> getPerTipologia(TipologiaRifiuto   tipo) {
         List<Cassonetto> lista = new ArrayList<>();
         String sql = "SELECT * FROM cassonetti_SmartWaste_G3 WHERE tipologia = ?";
 
         try (Connection co = conn.getConnection();
              PreparedStatement stmt = co.prepareStatement(sql)) {
 
-            stmt.setString(1, tipo);
+            stmt.setString(1, tipo.name());
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -125,6 +114,8 @@ public class CassonettoDAO {
 
         return lista;
     }
+
+    // SELECT CASSOMETTI DA SVUOTARE
 
     public List<Cassonetto> getCassonettiDaSvuotare() {
         List<Cassonetto> lista = new ArrayList<>();
@@ -145,9 +136,10 @@ public class CassonettoDAO {
         return lista;
     }
 
+    // RECONSTRUCTOR
     private Cassonetto creaCassonettoDaResultSet(ResultSet rs) throws SQLException {
 
-        String codice = rs.getString("codice");
+        int codice = rs.getInt("codice");
         String tipo = rs.getString("tipologia");
         double capacita = rs.getDouble("capacita");
         double valore = rs.getDouble("valore");

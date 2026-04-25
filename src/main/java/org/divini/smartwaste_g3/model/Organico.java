@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public class Organico extends Cassonetto {
     private double peso = 0.0;
 
-    public Organico(String codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
+    public Organico(int codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
         super(codice, latitudine, longitudine, dataInstallazione, oraInstallazione, capacita);
     }
 

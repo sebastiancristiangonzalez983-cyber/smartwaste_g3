@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public abstract class Cassonetto {
-    protected String codice;
+    protected int codice;
     protected double latitudine;
     protected double longitudine;
     protected LocalDate dataInstallazione;
@@ -13,7 +13,7 @@ public abstract class Cassonetto {
     protected LocalTime oraSvuotamento;
     protected double capacita;
 
-    public Cassonetto(String codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
+    public Cassonetto(int codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
         this.codice = codice;
         this.latitudine = latitudine;
         this.longitudine = longitudine;
@@ -24,7 +24,7 @@ public abstract class Cassonetto {
         this.capacita = capacita;
     }
 
-    public String getCodice() {
+    public int getCodice() {
         return this.codice;
     }
 

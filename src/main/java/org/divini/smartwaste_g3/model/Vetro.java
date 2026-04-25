@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public class Vetro extends Cassonetto {
     private int bottiglie = 0;
 
-    public Vetro(String codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, int capacitaMassimaBottiglie) {
+    public Vetro(int codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, int capacitaMassimaBottiglie) {
         super(codice, latitudine, longitudine, dataInstallazione, oraInstallazione, (double)capacitaMassimaBottiglie);
     }
 

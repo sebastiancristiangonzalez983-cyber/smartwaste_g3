@@ -21,17 +21,13 @@ public interface GestoreCassonetti {
      * @param codice il codice univoco del cassonetto
      * @return true se eliminato, false se non trovato
      */
-    boolean elimina(String codice);
+    boolean elimina(int codice);
 
     /**
      * Cerca un cassonetto per codice.
      * @param codice il codice da cercare
      * @return il cassonetto trovato, oppure null
      */
-    Cassonetto cercaPerCodice(String codice);
-
-    boolean elimina(int codice);
-
     Cassonetto cercaPerCodice(int codice);
 
     /**
@@ -46,8 +42,6 @@ public interface GestoreCassonetti {
      * @return lista di cassonetti filtrata per tipologia
      */
     List<Cassonetto> getPerTipologia(TipologiaRifiuto tipo);
-
-    List<Cassonetto> getPerTipologia(String tipo);
 
     /**
      * Restituisce i cassonetti che richiedono svuotamento (riempimento > 90%).

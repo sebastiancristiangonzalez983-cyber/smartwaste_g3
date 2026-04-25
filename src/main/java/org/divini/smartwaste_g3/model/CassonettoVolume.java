@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public abstract class CassonettoVolume extends Cassonetto {
     protected double volume = 0.0;
 
-    public CassonettoVolume(String codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
+    public CassonettoVolume(int codice, double latitudine, double longitudine, LocalDate dataInstallazione, LocalTime oraInstallazione, double capacita) {
         super(codice, latitudine, longitudine, dataInstallazione, oraInstallazione, capacita);
     }
 
