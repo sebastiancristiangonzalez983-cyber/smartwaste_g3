@@ -56,12 +56,4 @@ public abstract class Cassonetto {
         return getClass().getSimpleName() + " [" + codice + "] - Riempimento: "
                 + String.format("%.2f", getPercentualeRiempimento()) + "%";
     }
-
-   /*
-    @Override
-   public String toString() {
-        String var10000 = this.getClass().getSimpleName();
-        return var10000 + "\nCodice: " + this.codice + "\nLatitudine: " + this.latitudine + "\nLongitudine: " + this.longitudine + "\nData installazione: " + this.dataInstallazione + "\nOra installazione: " + this.oraInstallazione + "\nData ultimo svuotamento: " + this.dataSvuotamento + "\nOra ultimo svuotamento: " + this.oraSvuotamento + "\nCapacità massima: " + this.capacita + "\nPercentuale riempimento: " + String.format("%.2f", this.getPercentualeRiempimento()) + "%\n";
-    }
-    */
 }

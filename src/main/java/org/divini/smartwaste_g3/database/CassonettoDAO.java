@@ -6,6 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class CassonettoDAO {
 
     private ConnessioneDatabase conn;
@@ -15,28 +18,44 @@ public class CassonettoDAO {
     }
 
     // INSERT
-    public boolean inserisci(Cassonetto c) {
-        String sql = "INSERT INTO cassonetti_SmartWaste_G3 (codice, tipologia, capacita, valore) VALUES (?, ?, ?, ?)";
+public boolean inserisci(Cassonetto c) {
+        String sql = "INSERT INTO cassonetti_SmartWaste_G3 " + "(codice, latitudine, longitudine, data_installazione, ora_installazione, tipologia, valore, capacita) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection co = conn.getConnection();
              PreparedStatement stmt = co.prepareStatement(sql)) {
 
+            // 1) codice
             stmt.setInt(1, c.getCodice());
-            stmt.setString(2, c.getTipologia().name());
-            stmt.setDouble(3, c.getCapacita());
 
-            // valor actual (peso, volumen o botellas)
+            // 2) latitudine
+            stmt.setDouble(2, c.getLatitudine());
+
+            // 3) longitudine
+            stmt.setDouble(3, c.getLongitudine());
+
+            // 4) data_installazione
+            stmt.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
+
+            // 5) ora_installazione
+            stmt.setTime(5, java.sql.Time.valueOf(LocalTime.now()));
+
+            // 6) tipologia
+            stmt.setString(6, c.getTipologia().name());
+
+            // 7) valore (peso/volume/bottiglie)
             double valoreAttuale = c.getPercentualeRiempimento() * c.getCapacita() / 100;
-            stmt.setDouble(4, valoreAttuale);
+            stmt.setDouble(7, valoreAttuale);
+
+            // 8) capacita
+            stmt.setDouble(8, c.getCapacita());
 
             stmt.executeUpdate();
+            return true;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return false;
     }
-
     // SELECT ALL
     public List<Cassonetto> getTutti() {
         List<Cassonetto> lista = new ArrayList<>();

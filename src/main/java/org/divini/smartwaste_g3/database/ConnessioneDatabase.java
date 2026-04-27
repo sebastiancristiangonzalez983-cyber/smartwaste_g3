@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnessioneDatabase {
 
-    private final String url = "jdbc:mysql://10.130.0.173/a25c4g";
+    private final String url = "jdbc:mysql://10.130.0.173:1607/a25c4g";
     private final String user = "a25c4g";
     private final String password = "Divini25*";
 
