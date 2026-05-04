@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@../css/style.css"
+            fx:controller="org.divini.smartwaste_g3.controller.AggiungiController">
+
+    <top>
+        <Label text="Aggiungi Cassonetto"
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 20;"
+               BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+
+            <Button text="Organico" fx:id="btnOrganico" prefWidth="250"/>
+            <Button text="Vetro" fx:id="btnVetro" prefWidth="250"/>
+            <Button text="Carta" fx:id="btnCarta" prefWidth="250"/>
+            <Button text="Plastica" fx:id="btnPlastica" prefWidth="250"/>
+            <Button text="Indifferenziata" fx:id="btnIndifferenziata" prefWidth="250"/>
+
+        </VBox>
+    </center>
+
+    <bottom>
+        <Button text="Torna alla Home"
+                fx:id="btnHome"
+                style="-fx-padding: 10; -fx-font-size: 16px;"
+                BorderPane.alignment="CENTER"/>
+    </bottom>
+
+</BorderPane>

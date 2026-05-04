@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@../css/style.css"
+            fx:controller="org.divini.smartwaste_g3.controller.VisualizzaController">
+
+    <top>
+        <Label text="Tutti i Cassonetti"
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 20;"
+               BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <TableView fx:id="tabellaCassonetti" prefWidth="800" prefHeight="500">
+            <columns>
+                <TableColumn fx:id="colCodice" text="Codice" prefWidth="80"/>
+                <TableColumn fx:id="colLat" text="Latitudine" prefWidth="100"/>
+                <TableColumn fx:id="colLon" text="Longitudine" prefWidth="100"/>
+                <TableColumn fx:id="colTipo" text="Tipologia" prefWidth="120"/>
+                <TableColumn fx:id="colValore" text="Valore" prefWidth="100"/>
+                <TableColumn fx:id="colCapacita" text="Capacità" prefWidth="100"/>
+                <TableColumn fx:id="colPercentuale" text="Riempimento (%)" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <Button text="Torna alla Home"
+                fx:id="btnHome"
+                style="-fx-padding: 10; -fx-font-size: 16px;"
+                BorderPane.alignment="CENTER"/>
+    </bottom>
+
+</BorderPane>

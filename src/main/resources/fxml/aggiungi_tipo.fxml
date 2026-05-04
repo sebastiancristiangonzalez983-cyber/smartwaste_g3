@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@../css/style.css"
+      fx:controller="org.divini.smartwaste_g3.controller.AggiungiTipoController"
+      alignment="CENTER" spacing="15" style="-fx-padding: 20;">
+
+    <Label fx:id="lblTitolo" text="Aggiungi Cassonetto" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="txtLat" promptText="Latitudine"/>
+    <TextField fx:id="txtLon" promptText="Longitudine"/>
+    <TextField fx:id="txtCapacita" promptText="Capacità"/>
+    <TextField fx:id="txtRiempimento" promptText="Riempimento"/>
+
+    <Button text="Salva" fx:id="btnSalva" prefWidth="200"/>
+    <Button text="Indietro" fx:id="btnIndietro" prefWidth="200"/>
+
+</VBox>

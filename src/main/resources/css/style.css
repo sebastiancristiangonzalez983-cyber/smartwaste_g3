@@ -1,0 +1,27 @@
+.root {
+    -fx-background-color: #E9EEF3;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to bottom, #4A90E2, #357ABD);
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 8;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #5AA0F0, #3C82C5);
+}
+
+.button-secondary {
+    -fx-background-color: #D9D9D9;
+    -fx-text-fill: #4A4A4A;
+    -fx-background-radius: 8;
+}
+
+.label-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4A4A4A;
+}

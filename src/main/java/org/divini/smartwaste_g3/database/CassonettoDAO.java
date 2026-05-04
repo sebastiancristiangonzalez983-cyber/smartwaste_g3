@@ -17,37 +17,25 @@ public class CassonettoDAO {
         this.conn = conn;
     }
 
+    // ===========================
     // INSERT
-public boolean inserisci(Cassonetto c) {
-        String sql = "INSERT INTO cassonetti_SmartWaste_G3 " + "(codice, latitudine, longitudine, data_installazione, ora_installazione, tipologia, valore, capacita) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    // ===========================
+    public boolean inserisci(Cassonetto c) {
+        String sql = "INSERT INTO cassonetti_SmartWaste_G3 " + "(latitudine, longitudine, data_installazione, ora_installazione, tipologia, valore, capacita) " + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection co = conn.getConnection();
              PreparedStatement stmt = co.prepareStatement(sql)) {
 
-            // 1) codice
-            stmt.setInt(1, c.getCodice());
+            stmt.setDouble(1, c.getLatitudine());
+            stmt.setDouble(2, c.getLongitudine());
+            stmt.setDate(3, Date.valueOf(LocalDate.now()));
+            stmt.setTime(4, Time.valueOf(LocalTime.now()));
+            stmt.setString(5, c.getTipologia().name());
 
-            // 2) latitudine
-            stmt.setDouble(2, c.getLatitudine());
-
-            // 3) longitudine
-            stmt.setDouble(3, c.getLongitudine());
-
-            // 4) data_installazione
-            stmt.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
-
-            // 5) ora_installazione
-            stmt.setTime(5, java.sql.Time.valueOf(LocalTime.now()));
-
-            // 6) tipologia
-            stmt.setString(6, c.getTipologia().name());
-
-            // 7) valore (peso/volume/bottiglie)
             double valoreAttuale = c.getPercentualeRiempimento() * c.getCapacita() / 100;
-            stmt.setDouble(7, valoreAttuale);
+            stmt.setDouble(6, valoreAttuale);
 
-            // 8) capacita
-            stmt.setDouble(8, c.getCapacita());
+            stmt.setDouble(7, c.getCapacita());
 
             stmt.executeUpdate();
             return true;
@@ -56,7 +44,44 @@ public boolean inserisci(Cassonetto c) {
             throw new RuntimeException(e);
         }
     }
+
+    // ===========================
+    // UPDATE (per SVUOTARE)
+    // ===========================
+    public boolean aggiorna(Cassonetto c) {
+        String sql = "UPDATE cassonetti_SmartWaste_G3 SET " +
+                "valore = ?, capacita = ?, data_svuotamento = ?, ora_svuotamento = ? " +
+                "WHERE codice = ?";
+
+        try (Connection co = conn.getConnection();
+             PreparedStatement stmt = co.prepareStatement(sql)) {
+
+            double valoreAttuale = c.getPercentualeRiempimento() * c.getCapacita() / 100;
+
+            stmt.setDouble(1, valoreAttuale);
+            stmt.setDouble(2, c.getCapacita());
+
+            // Se è stato svuotato → registra data/ora
+            if (valoreAttuale == 0) {
+                stmt.setDate(3, Date.valueOf(LocalDate.now()));
+                stmt.setTime(4, Time.valueOf(LocalTime.now()));
+            } else {
+                stmt.setNull(3, Types.DATE);
+                stmt.setNull(4, Types.TIME);
+            }
+
+            stmt.setInt(5, c.getCodice());
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // ===========================
     // SELECT ALL
+    // ===========================
     public List<Cassonetto> getTutti() {
         List<Cassonetto> lista = new ArrayList<>();
         String sql = "SELECT * FROM cassonetti_SmartWaste_G3";
@@ -76,7 +101,9 @@ public boolean inserisci(Cassonetto c) {
         return lista;
     }
 
-    //DELETE
+    // ===========================
+    // DELETE
+    // ===========================
     public boolean elimina(int codice) {
         String sql = "DELETE FROM cassonetti_SmartWaste_G3 WHERE codice = ?";
 
@@ -91,7 +118,9 @@ public boolean inserisci(Cassonetto c) {
         }
     }
 
+    // ===========================
     // SELECT BY CODICE
+    // ===========================
     public Cassonetto cerca(int codice) {
         String sql = "SELECT * FROM cassonetti_SmartWaste_G3 WHERE codice = ?";
 
@@ -112,8 +141,10 @@ public boolean inserisci(Cassonetto c) {
         return null;
     }
 
+    // ===========================
     // SELECT BY TIPOLOGIA
-    public List<Cassonetto> getPerTipologia(TipologiaRifiuto   tipo) {
+    // ===========================
+    public List<Cassonetto> getPerTipologia(TipologiaRifiuto tipo) {
         List<Cassonetto> lista = new ArrayList<>();
         String sql = "SELECT * FROM cassonetti_SmartWaste_G3 WHERE tipologia = ?";
 
@@ -134,11 +165,13 @@ public boolean inserisci(Cassonetto c) {
         return lista;
     }
 
-    // SELECT CASSOMETTI DA SVUOTARE
-
+    // ===========================
+    // SELECT CASSOMETTI DA SVUOTARE (>90%)
+    // ===========================
     public List<Cassonetto> getCassonettiDaSvuotare() {
         List<Cassonetto> lista = new ArrayList<>();
-        String sql = "SELECT * FROM cassonetti_SmartWaste_G3 WHERE valore / capacita * 100 > 90";
+        String sql = "SELECT * FROM cassonetti_SmartWaste_G3 " +
+                "WHERE (valore / capacita) * 100 > 90";
 
         try (Connection co = conn.getConnection();
              PreparedStatement stmt = co.prepareStatement(sql);
@@ -155,24 +188,27 @@ public boolean inserisci(Cassonetto c) {
         return lista;
     }
 
+    // ===========================
     // RECONSTRUCTOR
+    // ===========================
     private Cassonetto creaCassonettoDaResultSet(ResultSet rs) throws SQLException {
 
         int codice = rs.getInt("codice");
+        double lat = rs.getDouble("latitudine");
+        double lon = rs.getDouble("longitudine");
         String tipo = rs.getString("tipologia");
         double capacita = rs.getDouble("capacita");
         double valore = rs.getDouble("valore");
 
         Cassonetto c = switch (TipologiaRifiuto.valueOf(tipo)) {
-            case Organico -> new Organico(codice, 0, 0, null, null, capacita);
-            case Vetro -> new Vetro(codice, 0, 0, null, null, (int) capacita);
-            case Carta -> new Carta(codice, 0, 0, null, null, capacita);
-            case Plastica -> new Plastica(codice, 0, 0, null, null, capacita);
-            case Indifferenziata -> new Indifferenziata(codice, 0, 0, null, null, capacita);
+            case Organico -> new Organico(codice, lat, lon, null, null, capacita);
+            case Vetro -> new Vetro(codice, lat, lon, null, null, (int) capacita);
+            case Carta -> new Carta(codice, lat, lon, null, null, capacita);
+            case Plastica -> new Plastica(codice, lat, lon, null, null, capacita);
+            case Indifferenziata -> new Indifferenziata(codice, lat, lon, null, null, capacita);
         };
 
         c.aggiorna(valore);
         return c;
     }
-
 }

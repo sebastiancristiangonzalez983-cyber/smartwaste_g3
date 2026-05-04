@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.divini.smartwaste_g3.controller.HomeController"
+            stylesheets="@../css/style.css">
+
+    <top>
+        <HBox alignment="CENTER" spacing="40"  BorderPane.alignment="CENTER" style="-fx-padding: 20;" >
+
+            <ImageView fx:id="logoDivini" fitHeight="150" preserveRatio="true" smooth="true">
+                <image>
+                    <Image url="@../images/DIVINI.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="logoSmart"  fitHeight="200" preserveRatio="true" smooth="true">
+                <image>
+                    <Image url="@../images/logo.png"/>
+                </image>
+            </ImageView>
+
+
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Button text="Visualizza Cassonetti" fx:id="btnVisualizza" prefWidth="250"/>
+            <Button text="Aggiungi Cassonetto" fx:id="btnAggiungi" prefWidth="250"/>
+            <Button text="Svuota Cassonetti" fx:id="btnSvuota" prefWidth="250"/>
+        </VBox>
+    </center>
+
+</BorderPane>
