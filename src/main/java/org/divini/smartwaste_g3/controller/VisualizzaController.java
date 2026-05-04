@@ -23,6 +23,9 @@ public class VisualizzaController {
     @FXML private TableColumn<Cassonetto, Double> colValore;
     @FXML private TableColumn<Cassonetto, Double> colCapacita;
     @FXML private TableColumn<Cassonetto, Double> colPercentuale;
+    @FXML private Button btnElimina;
+    @FXML private TableView<Cassonetto> tabella;
+
 
     @FXML private Button btnHome;
 
@@ -53,6 +56,8 @@ public class VisualizzaController {
 
         // Torna alla home
         btnHome.setOnAction(e -> tornaHome());
+        btnElimina.setOnAction(e -> eliminaCassonetto());
+
     }
 
     private void caricaTabella() {
@@ -69,4 +74,31 @@ public class VisualizzaController {
             e.printStackTrace();
         }
     }
+    private void eliminaCassonetto() {
+        Cassonetto selezionato = tabella.getSelectionModel().getSelectedItem();
+
+        if (selezionato == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setContentText("Seleziona un cassonetto dalla tabella.");
+            alert.showAndWait();
+            return;
+        }
+
+        CassonettoDAO dao = new CassonettoDAO(new ConnessioneDatabase());
+        boolean ok = dao.elimina(selezionato.getCodice());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+
+        if (ok) {
+            alert.setContentText("Cassonetto eliminato con successo!");
+            tabella.getItems().remove(selezionato); // aggiorna la tabella
+        } else {
+            alert.setContentText("Errore: cassonetto non trovato.");
+        }
+
+        alert.showAndWait();
+    }
+
 }

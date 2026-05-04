@@ -14,7 +14,7 @@
 
             <ImageView fx:id="logoDivini" fitHeight="150" preserveRatio="true" smooth="true">
                 <image>
-                    <Image url="@../images/DIVINI.png"/>
+                    <Image url="@../images/divini.png"/>
                 </image>
             </ImageView>
 
